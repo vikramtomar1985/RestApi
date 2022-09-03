@@ -21,7 +21,7 @@ import com.user.services.UserServices;
 public class UserController {
     
 
-    //@Autowired
+    @Autowired
     private UserServices userServices;
 
     @Autowired
@@ -37,7 +37,7 @@ public class UserController {
         return userServices.saveUser(users);
     }
 
-    @RequestMapping("/login")
+    @RequestMapping("/login1")
     public void login(@RequestParam("username") String username,
            @RequestParam("password") String password) {
 
@@ -46,16 +46,16 @@ public class UserController {
 
     }
 
-    @RequestMapping("/login")
-    public Status userLogin(@RequestParam User user){
-        List<User> users = userRepo.findAll();
-        for (User other : users) {
-            if (other.equals(user)) {
-                user.setLoggedIn(true);
-                userRepo.save(user);
-                return Status.SUCCESS;
-            }
+    @PostMapping("/login")
+    public Status userLogin(@RequestBody User user){        
+        System.out.println("Current User Name:  "+ user.getName());
+        System.out.println(userRepo.findByUserName(user.getUserName()));
+
+        if(userRepo.findByUserName(user.getUserName()).isPresent()){
+            userServices.login(user.getUserName(), user.getPassword());
+            return Status.SUCCESS;
         }
+        
         return Status.FAILURE;
     }
 
@@ -77,7 +77,9 @@ public class UserController {
     @PostMapping("/logout")
     public Status logUserOut(@RequestBody User user) {
         List<User> users = userRepo.findAll();
+        
         for (User other : users) {
+            System.out.println("User Name:  "+ user.getName());
             if (other.equals(user)) {
                 user.setLoggedIn(false);
                 userRepo.save(user);
@@ -85,5 +87,12 @@ public class UserController {
             }
         }
         return Status.FAILURE;
+    }
+
+    @PostMapping("/delete")
+    public Status deleteAll() {       
+        
+        userRepo.deleteAll();
+        return Status.SUCCESS;
     }
 }

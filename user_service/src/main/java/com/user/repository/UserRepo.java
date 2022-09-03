@@ -14,9 +14,9 @@ import com.user.entity.User;
 @Qualifier("UserRepo")
 public interface UserRepo extends JpaRepository<User, Long>{
     Optional<User> findByEmail(String email);
-    Optional<User> findByUsernameOrEmail(String username, String email);
-    Optional<User> findByUsername(String username);
-    Boolean existsByUsername(String username);
+    Optional<User> findByUserNameOrEmail(String username, String email);
+    Optional<User> findByUserName(String username);
+    Boolean existsByUserName(String username);
     Boolean existsByEmail(String email);
     
 }

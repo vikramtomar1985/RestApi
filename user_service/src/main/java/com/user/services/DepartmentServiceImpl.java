@@ -12,7 +12,7 @@ import com.user.repository.DepartmentRepository;
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 
-    //@Autowired
+    @Autowired
     private DepartmentRepository departmentRepository;
 
     @Override

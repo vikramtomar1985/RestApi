@@ -13,7 +13,7 @@ public class UserServiceImpl implements UserServices {
   /**
    *
    */
-  //@Autowired(required=true)
+  @Autowired(required=true)
   private UserRepo userRepo;
 
   List<Contact> contactList = List.of(
